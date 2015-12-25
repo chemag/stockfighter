@@ -1,0 +1,7 @@
+# http://help.github.com/ignore-files/
+
+# python bytecode
+*.pyc
+
+# sqlite DB
+*.sqlite
