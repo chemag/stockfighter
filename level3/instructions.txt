@@ -1,0 +1,55 @@
+Instructions
+
+Had Enough Hunting? Time to Try Farming!
+
+Welcome to your new job at Miller Sisters. We were impressed that you
+successfully exploited a market maker at your last job, so we want you to do
+something much harder: build one for us. You've got control of account
+MS10519711 and have been assigned to be the ZOMI Chicago Exchange (ZOMEX)
+market maker for EUHC Corp. (EUHC).
+
+ZOMI Chicago Exchange has no restrictions on your actions as a market maker --
+you're not subject to a requirement to be in the market, to maximum sizes of
+spreads, etc. One fly in the ointment, though: one of our competitors is also
+running a market making strategy. They suck at it, but they're not totally
+asleep at the wheel, so you can't just do the dumbest thing possible and reap
+riskless profits -- the dumbest thing is already spoken for.
+
+Worth noting: EUHC Corp. is a relative backwater in the investment world,
+followed by no analysts and appearing in the holdings of no mutual funds. This
+is great news for you, as it means that you can assume there is
+very-little-to-no smart money in this market.
+
+It's all sheep. Go fleece them. Err, wait, go provide them liquidity for their
+trades at a lower price then our competitor offers for the equivalent
+service... but like a hungry-while-still-nonthreatening animal. Like a
+chipmunk. Go chipmunk those trades!
+
+=Your Goal
+
+Make $10,000 in profit while minimizing your exposure to EUHC Corp..
+
+Profit equals your current net asset value minus your basis. Your basis is
+simply the sum of money you've spent so far. Don't worry, to keep the math easy
+for you we're subsidizing the fees and commissions.
+
+You should probably try to generate the profit via market making but if you're
+able to successfully speculate in EUHC shares well then good on you.
+
+=You'll Be Fired If
+
+You take on excessive risk. The risk desk says that, since you're new here, not
+to go over 1,000 shares in either direction. (You can borrow shares from Miller
+Sisters costlessly if you need to be short shares.)
+
+You lose too much money. The risk desk periodically calculates the total value
+of your shares (calculated as of the last trade) and cash. If they're unhappy
+with it, you're done.
+
+A New Subtlety
+
+You're a market maker, so you need to keep accurate records of what your
+position is at any given time. We are keeping tabs on it, too (the risk desk
+won't just "take your word for it"), but for compliance reasons, we don't feel
+the need to tell you what it is anymore.
+
