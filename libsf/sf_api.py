@@ -8,6 +8,7 @@ api_key_header = "X-Starfighter-Authorization"
 
 URL = 'https://api.stockfighter.io'
 LOCAL_URL = 'http://localhost:8080'
+WEBSOCKET_URL = 'wss://api.stockfighter.io/ob/api/ws'
 
 URL_PREFIX = 'ob/api'
 
@@ -96,9 +97,18 @@ URL_TEMPLATES = {
 			string.Template('venues/$venue/accounts/$account/orders')],
 }
 
+WEBSOCKET_URL_TEMPLATES = {
+	'tickertape': string.Template('$account/venues/$venue/tickertape'),
+	'stock_tickertape': string.Template('$account/venues/$venue/tickertape/stocks/$stock'),
+	'executions': string.Template('$account/venues/$venue/executions'),
+	'stock_executions': string.Template('$account/venues/$venue/executions/stock/$stock'),
+}
+
 HTTP_HEADERS = {
 	'Accept': '*/*',
 	'accept-encoding': 'gzip',
+}
+WEBSOCKET_HEADERS = {
 }
 
 try:
@@ -108,6 +118,7 @@ except ImportError:
 	sys.exit(-1)
 
 HTTP_HEADERS[api_key_header] = api_key.key
+WEBSOCKET_HEADERS[api_key_header] = api_key.key
 
 NOK = {
 	'ok': False,
