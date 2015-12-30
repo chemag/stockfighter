@@ -21,12 +21,16 @@ class SFClient(object):
 		self.local_ = local
 		self.ob_url_ = sf_api.LOCAL_URL if local else sf_api.URL
 		self.ob_url_ += '/' + sf_api.URL_PREFIX
+		self.gm_url_ = sf_api.LOCAL_URL if local else sf_api.URL
+		self.gm_url_ += '/' + sf_api.GM_URL_PREFIX
 		# support explicit server URLs
 		if server_url is not None:
 			self.ob_url_ = server_url + '/' + sf_api.URL_PREFIX
+			self.gm_url_ = server_url + '/' + sf_api.GM_URL_PREFIX
 		self.debug_ = kwargs.get('debug', 0)
 
 	def run_http(self, url, http_type, data=None):
+		# TODO(chema): not for gm
 		http_headers = sf_api.HTTP_HEADERS
 		if self.debug_ > 0:
 			print '...tx-headers(%s): %r' % (url, http_headers)
@@ -57,6 +61,8 @@ class SFClient(object):
 		# check the command
 		if cmd in sf_api.URL_TEMPLATES:
 			return self.ob_run(cmd, **kwargs)
+		elif cmd in sf_api.GM_URL_TEMPLATES:
+			return self.gm_run(cmd, **kwargs)
 		else:
 			return -1, 'invalid command: "%s"' % cmd
 
@@ -83,3 +89,36 @@ class SFClient(object):
 		url = (self.ob_url_ + '/' + template.substitute(**kwargs))
 		return self.run_http(url, http_type, data)
 
+	def gm_run(self, cmd, **kwargs):
+		# check required input parameters
+		http_type = sf_api.GM_URL_TEMPLATES[cmd][0]
+		template = sf_api.GM_URL_TEMPLATES[cmd][1]
+		for key in sf_utils.get_template_keys(template):
+			if kwargs.get(key, None) is None:
+				return -1, 'error: "%s" command (%s) requires %s' % (cmd,
+						sf_api.get_http_type_str(http_type), key)
+		# POST data build
+		data = None
+		if http_type == sf_api.POST:
+			data = '\r\n'.join(sf_api.GM_POST_PARAMETERS)
+		# build the url
+		url = (self.gm_url_ + '/' + template.substitute(**kwargs))
+		return self.run_http(url, http_type, data)
+
+	def first_steps(self):
+		return self.gm_run('first_steps')
+
+	def restart(self, instance):
+		return self.gm_run('restart', instance)
+
+	def stop(self, instance):
+		return self.gm_run('stop', instance)
+
+	def resume(self, instance):
+		return self.gm_run('resume', instance)
+
+	def status(self, instance):
+		return self.gm_run('status', instance)
+
+	def levels(self):
+		return self.gm_run('first_steps')

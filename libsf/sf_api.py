@@ -11,6 +11,7 @@ LOCAL_URL = 'http://localhost:8080'
 WEBSOCKET_URL = 'wss://api.stockfighter.io/ob/api/ws'
 
 URL_PREFIX = 'ob/api'
+GM_URL_PREFIX = 'gm'
 
 # http types
 [GET, POST, DELETE, HTTP_TYPE_TOTAL] = range(4)
@@ -97,6 +98,16 @@ URL_TEMPLATES = {
 			string.Template('venues/$venue/accounts/$account/orders')],
 }
 
+GM_URL_TEMPLATES = {
+	# http_type, url template
+	'first_steps': [POST, string.Template('levels/first_steps')],
+	'restart': [POST, string.Template('instances/$instance/restart')],
+	'stop': [POST, string.Template('instances/$instance/stop')],
+	'resume': [POST, string.Template('instances/$instance/resume')],
+	'status': [GET, string.Template('instances/$instance')],
+	'levels': [GET, string.Template('levels')],
+}
+
 WEBSOCKET_URL_TEMPLATES = {
 	'tickertape': string.Template('$account/venues/$venue/tickertape'),
 	'stock_tickertape': string.Template('$account/venues/$venue/tickertape/stocks/$stock'),
@@ -119,6 +130,9 @@ except ImportError:
 
 HTTP_HEADERS[api_key_header] = api_key.key
 WEBSOCKET_HEADERS[api_key_header] = api_key.key
+GM_POST_PARAMETERS = [
+		'Cookie:api_key=' + api_key.key,
+]
 
 NOK = {
 	'ok': False,

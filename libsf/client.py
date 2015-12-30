@@ -54,6 +54,14 @@ def get_opts(argv):
 			for key in key_l:
 				if key not in sf_utils.get_template_keys(template):
 					parser_cmd[cmd].add_argument('--%s' % key)
+	for cmd in sf_api.GM_URL_TEMPLATES.keys():
+		http_type = sf_api.GM_URL_TEMPLATES[cmd][0]
+		template = sf_api.GM_URL_TEMPLATES[cmd][1]
+		parser_cmd[cmd] = subparsers.add_parser(cmd, help='run gm %s' % cmd)
+		parser_cmd[cmd].set_defaults(cmd=cmd)
+		# add per-command flags
+		for key in sf_utils.get_template_keys(template):
+			parser_cmd[cmd].add_argument('--%s' % key)
 	parser.add_argument('remaining', nargs=argparse.REMAINDER)
 	# do the parsing
 	return parser.parse_args(argv[1:])
