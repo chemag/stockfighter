@@ -5,18 +5,17 @@
 # http://isbullsh.it/2012/06/Rest-api-in-python/
 
 import argparse
-import requests
-import json
-import re
 import sys
 
-import sf_api
-import sf_client
-import sf_order
-import sf_utils
+from libsf import sf_api
+from libsf import sf_client
+from libsf import sf_gm
+from libsf import sf_order
+from libsf import sf_utils
 
 
 def get_opts(argv):
+	"""Option parser."""
 	# init parser
 	parser = argparse.ArgumentParser(description='A generic SF client.')
 	# common flags
@@ -68,13 +67,14 @@ def get_opts(argv):
 
 
 def main(argv):
+	"""Main client function."""
 	vals = get_opts(argv)
 	# print arguments
 	if vals.debug > 1:
 		print "vals: %r" % vals
 		print "remaining: %r" % vals.remaining
-		for k, v in vars(vals).iteritems():
-			print 'vals.%s = %s' % (k, v)
+		for key, val in vars(vals).iteritems():
+			print 'vals.%s = %s' % (key, val)
 		print 'remaining args is %s' % vals.remaining
 
 	kwargs = vars(vals)
@@ -97,14 +97,21 @@ def main(argv):
 
 
 def run_command(local, server_url, **kwargs):
-	# create a client
+	"""Run a simple command."""
+	# create clients
 	client = sf_client.SFClient(local, server_url, **kwargs)
+	client_gm = sf_gm.SFGMClient(local, server_url, **kwargs)
 	# run the command
 	if kwargs['cmd'] == 'order_add':
 		kwargs['order'] = sf_order.create_order(**kwargs)
 	cmd = kwargs['cmd']
 	del kwargs['cmd']
-	ret = client.run(cmd, **kwargs)
+	if cmd in sf_api.URL_TEMPLATES.keys():
+		ret = client.run(cmd, **kwargs)
+	elif cmd in sf_api.GM_URL_TEMPLATES.keys():
+		ret = client_gm.run(cmd, **kwargs)
+	else:
+		print 'error: invalid command: %s' % cmd
 	if ret[0] == -1:
 		print ret[1]
 		sys.exit(-1)

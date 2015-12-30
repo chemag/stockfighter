@@ -1,11 +1,10 @@
 #!/usr/bin/env python
 
 import datetime
-import json
 import time
 import sys
 
-import sf_api
+from libsf import sf_api
 
 class SFOrderFill(object):
 	def __init__(self, price, qty, ts):

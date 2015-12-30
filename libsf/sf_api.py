@@ -100,25 +100,42 @@ URL_TEMPLATES = {
 
 GM_URL_TEMPLATES = {
 	# http_type, url template
-	'first_steps': [POST, string.Template('levels/first_steps')],
+	# pseudo-command
+	'level': [POST, string.Template('levels/$level')],
+	# instance commands
 	'restart': [POST, string.Template('instances/$instance/restart')],
 	'stop': [POST, string.Template('instances/$instance/stop')],
 	'resume': [POST, string.Template('instances/$instance/resume')],
 	'status': [GET, string.Template('instances/$instance')],
+	# unimplemented
 	'levels': [GET, string.Template('levels')],
 }
 
+GM_LEVELNAMES = {
+	1: 'first_steps',
+	2: 'sell_side',
+	3: 'chock_a_block',
+	4: 'dueling_bulldozers',
+}
+
+for levelname in GM_LEVELNAMES.values():
+	GM_URL_TEMPLATES[levelname] = [POST, string.Template('levels/%s' % levelname)]
+
+
 WEBSOCKET_URL_TEMPLATES = {
 	'tickertape': string.Template('$account/venues/$venue/tickertape'),
-	'stock_tickertape': string.Template('$account/venues/$venue/tickertape/stocks/$stock'),
+	'stock_tickertape':
+			string.Template('$account/venues/$venue/tickertape/stocks/$stock'),
 	'executions': string.Template('$account/venues/$venue/executions'),
-	'stock_executions': string.Template('$account/venues/$venue/executions/stock/$stock'),
+	'stock_executions':
+			string.Template('$account/venues/$venue/executions/stock/$stock'),
 }
 
 HTTP_HEADERS = {
 	'Accept': '*/*',
 	'accept-encoding': 'gzip',
 }
+
 WEBSOCKET_HEADERS = {
 }
 

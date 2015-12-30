@@ -1,9 +1,8 @@
 #!/usr/bin/env python
 
-import database
-import datetime
-import json
 import time
+
+from libsf import database
 
 class SFStorage(object):
 
